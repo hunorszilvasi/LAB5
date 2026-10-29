@@ -17,6 +17,40 @@ namespace LAB5.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.14");
 
+            modelBuilder.Entity("LAB5.CategorieProdus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Denumire")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CategoriiProduse");
+                });
+
+            modelBuilder.Entity("LAB5.IstoricVanzari", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Cantitate")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdProdus")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdProdus");
+
+                    b.ToTable("IstoricVanzari");
+                });
+
             modelBuilder.Entity("LAB5.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -34,6 +68,9 @@ namespace LAB5.Migrations
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("IdCategorie")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -44,7 +81,31 @@ namespace LAB5.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdCategorie");
+
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("LAB5.IstoricVanzari", b =>
+                {
+                    b.HasOne("LAB5.Product", "Produs")
+                        .WithMany()
+                        .HasForeignKey("IdProdus")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Produs");
+                });
+
+            modelBuilder.Entity("LAB5.Product", b =>
+                {
+                    b.HasOne("LAB5.CategorieProdus", "Categorie")
+                        .WithMany()
+                        .HasForeignKey("IdCategorie")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categorie");
                 });
 #pragma warning restore 612, 618
         }

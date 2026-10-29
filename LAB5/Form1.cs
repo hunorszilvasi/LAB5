@@ -1,3 +1,4 @@
+
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -29,19 +30,37 @@ namespace LAB5
 
                     db.Database.Migrate();
 
-                    var query = db.Products.AsNoTracking();
+                    var query = db.Products
+                        .AsNoTracking()
+                        .Include(p => p.Categorie)
+                        .AsQueryable();
 
                     if (!string.IsNullOrWhiteSpace(searchText))
                     {
                         query = query.Where(p =>
                             p.Name.Contains(searchText) ||
-                            p.Description.Contains(searchText));
+                            p.Description.Contains(searchText) ||
+                            (p.Categorie != null &&
+                             p.Categorie.Denumire.Contains(searchText)));
                     }
 
-                    return query.ToList();
+                    return query.Select(p => new
+                    {
+                        p.Id,
+                        p.Name,
+                        p.Description,
+                        p.EntryDate,
+                        p.ExpirationDate,
+                        p.Quantity,
+                        Category = p.Categorie != null
+                            ? p.Categorie.Denumire
+                            : "Fara categorie"
+                    }).ToList();
                 });
 
-                // Az eredmény átadása a GUI-szálnak Invoke segítségével
+                if (IsDisposed || !IsHandleCreated)
+                    return;
+
                 if (dataGridView1.InvokeRequired)
                 {
                     dataGridView1.Invoke(new Action(() =>
@@ -58,19 +77,11 @@ namespace LAB5
             {
                 if (!IsDisposed && IsHandleCreated)
                 {
-                    if (InvokeRequired)
-                    {
-                        Invoke(new Action(() =>
-                        {
-                            MessageBox.Show(
-                                "Error loading products:\n" + ex.Message);
-                        }));
-                    }
-                    else
-                    {
-                        MessageBox.Show(
-                            "Error loading products:\n" + ex.Message);
-                    }
+                    MessageBox.Show(
+                        "Error loading products:\n" + ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                 }
             }
         }
@@ -108,14 +119,25 @@ namespace LAB5
             if (e.RowIndex < 0)
                 return;
 
-            if (dataGridView1.Rows[e.RowIndex].DataBoundItem
-                is not Product selectedProduct)
+            var row = dataGridView1.Rows[e.RowIndex];
+
+            if (row.Cells["Id"].Value == null ||
+                row.Cells["Name"].Value == null ||
+                row.Cells["Quantity"].Value == null)
+            {
                 return;
+            }
+
+            int selectedId = Convert.ToInt32(row.Cells["Id"].Value);
+            string selectedName = row.Cells["Name"].Value.ToString()
+                ?? string.Empty;
+            int selectedQuantity = Convert.ToInt32(
+                row.Cells["Quantity"].Value);
 
             using (var form = new SellProductForm(
-                selectedProduct.Id,
-                selectedProduct.Name,
-                selectedProduct.Quantity))
+                selectedId,
+                selectedName,
+                selectedQuantity))
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
@@ -160,9 +182,38 @@ namespace LAB5
             }
         }
 
+        // Refresh
         private void button4_Click(object sender, EventArgs e)
         {
             LoadProducts(textBox1.Text.Trim());
+        }
+
+        // Categories
+        private void categoriesToolStripMenuItem_Click(
+            object sender, EventArgs e)
+        {
+            using (var form = new CategoryForm())
+            {
+                form.ShowDialog();
+            }
+        }
+
+
+        private void salesHistoryToolStripMenuItem_Click(
+            object sender, EventArgs e)
+        {
+            using (var form = new SalesHistoryForm())
+            {
+                form.ShowDialog();
+            }
+        }
+
+        private void addCategoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var form = new CategoryForm())
+            {
+                form.ShowDialog();
+            }
         }
     }
 }

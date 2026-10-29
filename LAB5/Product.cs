@@ -1,6 +1,8 @@
 ﻿
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LAB5
 {
@@ -20,5 +22,10 @@ namespace LAB5
         public DateTime ExpirationDate { get; set; }
 
         public int Quantity { get; set; }
+
+        public int IdCategorie { get; set; }
+
+        [ForeignKey(nameof(IdCategorie))]
+        public CategorieProdus? Categorie { get; set; }
     }
 }

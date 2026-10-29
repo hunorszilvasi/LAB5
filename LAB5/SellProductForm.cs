@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LAB5
@@ -21,7 +23,7 @@ namespace LAB5
             lblAvailableQuantity.Text = availableQuantity.ToString();
 
             numericUpDown1.Minimum = 1;
-            numericUpDown1.Maximum = availableQuantity;
+            numericUpDown1.Maximum = Math.Max(1, availableQuantity);
             numericUpDown1.Value = 1;
         }
 
@@ -34,63 +36,80 @@ namespace LAB5
         }
 
         // Sell gomb
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             int quantityToSell = (int)numericUpDown1.Value;
 
+            button1.Enabled = false;
+
             try
             {
-                using (var db = new ProductDbContext())
+                await Task.Run(() =>
                 {
+                    using var db = new ProductDbContext();
+
                     var product = db.Products.Find(productId);
 
                     if (product == null)
                     {
-                        MessageBox.Show("Product not found.");
-                        return;
+                        throw new InvalidOperationException(
+                            "Product not found.");
                     }
 
                     if (quantityToSell > product.Quantity)
                     {
-                        MessageBox.Show("Not enough products in stock.");
-                        return;
+                        throw new InvalidOperationException(
+                            "Not enough products in stock.");
                     }
 
                     product.Quantity -= quantityToSell;
 
-                    if (product.Quantity == 0)
+                    db.IstoricVanzari.Add(new IstoricVanzari
                     {
-                        db.Products.Remove(product);
-                    }
+                        IdProdus = product.Id,
+                        Cantitate = quantityToSell
+                    });
+
 
                     db.SaveChanges();
-                }
 
-                MessageBox.Show("Sale completed successfully!");
+                    Invoke(new Action(() =>
+                    {
+                        MessageBox.Show(
+                            "Sale completed successfully!");
 
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                        DialogResult = DialogResult.OK;
+                        Close();
+                    }));
+                });
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Error during sale:\n" + ex.Message,
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                if (!IsDisposed)
+                {
+                    MessageBox.Show(
+                        "Error during sale:\n" + ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+            }
+            finally
+            {
+                if (!IsDisposed)
+                    button1.Enabled = true;
             }
         }
 
         // Cancel gomb
         private void button2_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
     }
 }

@@ -38,7 +38,10 @@
             addProductsToolStripMenuItem = new ToolStripMenuItem();
             newProductToolStripMenuItem = new ToolStripMenuItem();
             increaseExistingStockToolStripMenuItem = new ToolStripMenuItem();
+            categoriesToolStripMenuItem = new ToolStripMenuItem();
+            salesHistoryToolStripMenuItem = new ToolStripMenuItem();
             button4 = new Button();
+            addCategoryToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             menuStrip2.SuspendLayout();
             SuspendLayout();
@@ -109,7 +112,7 @@
             // 
             // addProductsToolStripMenuItem
             // 
-            addProductsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newProductToolStripMenuItem, increaseExistingStockToolStripMenuItem });
+            addProductsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newProductToolStripMenuItem, increaseExistingStockToolStripMenuItem, categoriesToolStripMenuItem });
             addProductsToolStripMenuItem.Name = "addProductsToolStripMenuItem";
             addProductsToolStripMenuItem.Size = new Size(91, 20);
             addProductsToolStripMenuItem.Text = "Add products";
@@ -128,6 +131,21 @@
             increaseExistingStockToolStripMenuItem.Text = "Increase Existing Stock";
             increaseExistingStockToolStripMenuItem.Click += increaseExistingStockToolStripMenuItem_Click;
             // 
+            // categoriesToolStripMenuItem
+            // 
+            categoriesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { salesHistoryToolStripMenuItem, addCategoryToolStripMenuItem });
+            categoriesToolStripMenuItem.Name = "categoriesToolStripMenuItem";
+            categoriesToolStripMenuItem.Size = new Size(192, 22);
+            categoriesToolStripMenuItem.Text = "Categories";
+            categoriesToolStripMenuItem.Click += categoriesToolStripMenuItem_Click;
+            // 
+            // salesHistoryToolStripMenuItem
+            // 
+            salesHistoryToolStripMenuItem.Name = "salesHistoryToolStripMenuItem";
+            salesHistoryToolStripMenuItem.Size = new Size(180, 22);
+            salesHistoryToolStripMenuItem.Text = "Sales History";
+            salesHistoryToolStripMenuItem.Click += salesHistoryToolStripMenuItem_Click;
+            // 
             // button4
             // 
             button4.Location = new Point(316, 212);
@@ -137,6 +155,13 @@
             button4.Text = "Refresh";
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
+            // 
+            // addCategoryToolStripMenuItem
+            // 
+            addCategoryToolStripMenuItem.Name = "addCategoryToolStripMenuItem";
+            addCategoryToolStripMenuItem.Size = new Size(180, 22);
+            addCategoryToolStripMenuItem.Text = "Add Category";
+            addCategoryToolStripMenuItem.Click += addCategoryToolStripMenuItem_Click;
             // 
             // Form1
             // 
@@ -174,5 +199,8 @@
         private ToolStripMenuItem newProductToolStripMenuItem;
         private ToolStripMenuItem increaseExistingStockToolStripMenuItem;
         private Button button4;
+        private ToolStripMenuItem categoriesToolStripMenuItem;
+        private ToolStripMenuItem salesHistoryToolStripMenuItem;
+        private ToolStripMenuItem addCategoryToolStripMenuItem;
     }
 }
