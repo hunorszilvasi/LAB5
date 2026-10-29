@@ -40,8 +40,8 @@
             increaseExistingStockToolStripMenuItem = new ToolStripMenuItem();
             categoriesToolStripMenuItem = new ToolStripMenuItem();
             salesHistoryToolStripMenuItem = new ToolStripMenuItem();
-            button4 = new Button();
             addCategoryToolStripMenuItem = new ToolStripMenuItem();
+            button4 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             menuStrip2.SuspendLayout();
             SuspendLayout();
@@ -51,7 +51,7 @@
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(37, 56);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(711, 150);
+            dataGridView1.Size = new Size(804, 150);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -69,7 +69,7 @@
             // 
             menuStrip1.Location = new Point(0, 24);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 24);
+            menuStrip1.Size = new Size(896, 24);
             menuStrip1.TabIndex = 2;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -106,7 +106,7 @@
             menuStrip2.Items.AddRange(new ToolStripItem[] { addProductsToolStripMenuItem });
             menuStrip2.Location = new Point(0, 0);
             menuStrip2.Name = "menuStrip2";
-            menuStrip2.Size = new Size(800, 24);
+            menuStrip2.Size = new Size(896, 24);
             menuStrip2.TabIndex = 6;
             menuStrip2.Text = "menuStrip2";
             // 
@@ -114,8 +114,8 @@
             // 
             addProductsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newProductToolStripMenuItem, increaseExistingStockToolStripMenuItem, categoriesToolStripMenuItem });
             addProductsToolStripMenuItem.Name = "addProductsToolStripMenuItem";
-            addProductsToolStripMenuItem.Size = new Size(91, 20);
-            addProductsToolStripMenuItem.Text = "Add products";
+            addProductsToolStripMenuItem.Size = new Size(66, 20);
+            addProductsToolStripMenuItem.Text = "Products";
             // 
             // newProductToolStripMenuItem
             // 
@@ -146,16 +146,6 @@
             salesHistoryToolStripMenuItem.Text = "Sales History";
             salesHistoryToolStripMenuItem.Click += salesHistoryToolStripMenuItem_Click;
             // 
-            // button4
-            // 
-            button4.Location = new Point(316, 212);
-            button4.Name = "button4";
-            button4.Size = new Size(75, 23);
-            button4.TabIndex = 7;
-            button4.Text = "Refresh";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
-            // 
             // addCategoryToolStripMenuItem
             // 
             addCategoryToolStripMenuItem.Name = "addCategoryToolStripMenuItem";
@@ -163,11 +153,21 @@
             addCategoryToolStripMenuItem.Text = "Add Category";
             addCategoryToolStripMenuItem.Click += addCategoryToolStripMenuItem_Click;
             // 
+            // button4
+            // 
+            button4.Location = new Point(298, 212);
+            button4.Name = "button4";
+            button4.Size = new Size(117, 23);
+            button4.TabIndex = 7;
+            button4.Text = "Refresh";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(896, 450);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(button2);
